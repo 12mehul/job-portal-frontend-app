@@ -31,7 +31,7 @@ const initialValues: IRegister = {
 };
 
 const validationSchema = Yup.object().shape({
-  Name: Yup.string().required("Name is required"),
+  name: Yup.string().required("Name is required"),
   email: Yup.string()
     .email("Invalid email format")
     .required("Email is required"),
@@ -92,19 +92,16 @@ const Register = () => {
     validationSchema,
     onSubmit: (values, action) => {
       axios
-        .post(
-          "https://66e066f02fb67ac16f2981b3.mockapi.io/api/users/register",
-          values
-        )
+        .post("http://localhost:4444/auth/signup", values)
         .then((res: AxiosResponse) => {
           if (res.data) {
+            localStorage.setItem("uinfo", JSON.stringify(res.data));
             action.resetForm();
           }
         })
         .catch((err) => console.log(err));
     },
   });
-  console.log(values);
 
   return (
     <Container
@@ -152,8 +149,8 @@ const Register = () => {
               <Grid2 size={12}>
                 <TextField
                   label="Name"
-                  variant="outlined"
-                  color="primary"
+                  variant="standard"
+                  color="secondary"
                   type="text"
                   name="name"
                   placeholder="Enter name"
@@ -168,8 +165,8 @@ const Register = () => {
               <Grid2 size={12}>
                 <TextField
                   label="Email"
-                  variant="outlined"
-                  color="primary"
+                  variant="standard"
+                  color="secondary"
                   type="email"
                   name="email"
                   placeholder="Enter email"
@@ -184,8 +181,8 @@ const Register = () => {
               <Grid2 size={12}>
                 <TextField
                   label="Password"
-                  variant="outlined"
-                  color="primary"
+                  variant="standard"
+                  color="secondary"
                   type="password"
                   name="password"
                   placeholder="Enter password"
@@ -209,8 +206,8 @@ const Register = () => {
                     >
                       <TextField
                         label={`Institution Name#${index}`}
-                        variant="outlined"
-                        color="primary"
+                        variant="standard"
+                        color="secondary"
                         type="text"
                         fullWidth
                         name="institutionName"
@@ -221,8 +218,8 @@ const Register = () => {
                       />
                       <TextField
                         label="Start Year"
-                        variant="outlined"
-                        color="primary"
+                        variant="standard"
+                        color="secondary"
                         type="number"
                         fullWidth
                         name="startYear"
@@ -233,8 +230,8 @@ const Register = () => {
                       />
                       <TextField
                         label="End Year"
-                        variant="outlined"
-                        color="primary"
+                        variant="standard"
+                        color="secondary"
                         type="number"
                         fullWidth
                         name="endYear"
@@ -267,8 +264,8 @@ const Register = () => {
                   <Grid2 size={12}>
                     <TextField
                       label="Skills"
-                      variant="outlined"
-                      color="primary"
+                      variant="standard"
+                      color="secondary"
                       placeholder="Press Enter to add skills"
                       fullWidth
                       value={skillInput}
@@ -296,8 +293,8 @@ const Register = () => {
                   <Grid2 size={12}>
                     <TextField
                       label="Bio (upto 250 words)"
-                      variant="outlined"
-                      color="primary"
+                      variant="standard"
+                      color="secondary"
                       type="text"
                       name="bio"
                       fullWidth
@@ -312,8 +309,10 @@ const Register = () => {
                       country={"in"}
                       value={values.contactNumber}
                       onChange={(phone) =>
-                        setFieldValue("contactNumber", phone)
+                        setFieldValue("contactNumber", `+${phone}`)
                       }
+                      enableAreaCodes={true}
+                      countryCodeEditable={false}
                     />
                   </Grid2>
                 </>
