@@ -1,15 +1,20 @@
+import { Fragment } from "react/jsx-runtime";
+import ToastifyContainer from "./common/ToastifyContainer";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Login from "./components/Login";
 import Signup from "./pages/Signup";
+import Signin from "./pages/Signin";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/register" element={<Signup />} />
-      </Routes>
-    </BrowserRouter>
+    <Fragment>
+      <ToastifyContainer />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Signin />} />
+          <Route path="/register" element={<Signup />} />
+        </Routes>
+      </BrowserRouter>
+    </Fragment>
   );
 }
 

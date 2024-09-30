@@ -4,6 +4,7 @@ import { IRegister } from "../interface/IRegister";
 import { useFormik } from "formik";
 import axios, { AxiosResponse } from "axios";
 import {
+  Box,
   Button,
   Chip,
   Container,
@@ -18,6 +19,7 @@ import {
 } from "@mui/material";
 import * as Yup from "yup";
 import PhoneInput from "react-phone-input-2";
+import { toast } from "react-toastify";
 
 const initialValues: IRegister = {
   type: "applicant",
@@ -95,11 +97,16 @@ const Register = () => {
         .post("http://localhost:4444/auth/signup", values)
         .then((res: AxiosResponse) => {
           if (res.data) {
+            toast.success("Registration successful!");
             localStorage.setItem("uinfo", JSON.stringify(res.data));
             action.resetForm();
           }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          if (err) {
+            toast.error(err.response.data.message);
+          }
+        });
     },
   });
 
@@ -119,16 +126,41 @@ const Register = () => {
         alignItems="center"
         sx={{ minHeight: "100vh" }}
       >
-        <Paper elevation={20} square={false} style={paperStyle}>
+        <Paper elevation={15} square={false} style={paperStyle}>
           <Grid2 container justifyContent="center">
-            <Typography
-              variant="h4"
-              component="h4"
-              className="text-purple-600"
-              sx={{ marginBottom: "20px" }}
-            >
+            <Typography variant="h4" component="h4" color="secondary">
               Sign Up
             </Typography>
+          </Grid2>
+          <Grid2
+            container
+            justifyContent="center"
+            alignItems="center"
+            gap="5px"
+          >
+            <Box
+              component="p"
+              sx={{
+                fontWeight: 500,
+                color: "grey.800",
+                fontSize: "1rem",
+              }}
+            >
+              Registered yet?
+            </Box>
+            <Box
+              component="a"
+              href="/"
+              sx={{
+                textDecoration: "none",
+                color: "primary.main",
+                "&:hover": {
+                  color: "primary.dark",
+                },
+              }}
+            >
+              Login now
+            </Box>
           </Grid2>
           <form autoComplete="off" onSubmit={handleSubmit}>
             <Grid2 container spacing={3}>
