@@ -112,10 +112,15 @@ const Login = () => {
               <Grid2 size={12}>
                 <Button
                   variant="contained"
-                  color="primary"
+                  color="secondary"
                   type="submit"
                   fullWidth
                   size="medium"
+                  sx={{
+                    padding: "8px",
+                    fontSize: "15px",
+                    textAlign: "center",
+                  }}
                 >
                   Login
                 </Button>

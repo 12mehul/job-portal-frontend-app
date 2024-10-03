@@ -279,10 +279,10 @@ const Register = () => {
                       variant="contained"
                       sx={{
                         fontWeight: 500,
-                        backgroundColor: "#ff4ab1",
+                        backgroundColor: "#433878",
                         color: "white",
                         "&:hover": {
-                          backgroundColor: "#ff5eba",
+                          backgroundColor: "#7E60BF",
                         },
                       }}
                       type="button"
@@ -352,10 +352,15 @@ const Register = () => {
               <Grid2 size={12}>
                 <Button
                   variant="contained"
-                  color="primary"
+                  color="secondary"
                   type="submit"
                   fullWidth
                   size="medium"
+                  sx={{
+                    padding: "8px",
+                    fontSize: "15px",
+                    textAlign: "center",
+                  }}
                 >
                   Register
                 </Button>
