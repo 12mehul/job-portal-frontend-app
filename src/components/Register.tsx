@@ -100,6 +100,9 @@ const Register = () => {
             toast.success("Registration successful!");
             localStorage.setItem("uinfo", JSON.stringify(res.data));
             action.resetForm();
+            setTimeout(() => {
+              window.location.href = "/";
+            }, 2000);
           }
         })
         .catch((err) => {

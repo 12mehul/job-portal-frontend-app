@@ -9,6 +9,7 @@ import LayersIcon from "@mui/icons-material/Layers";
 import { AppProvider, DashboardLayout } from "@toolpad/core";
 import type { Navigation, Router } from "@toolpad/core";
 import { useLocation, useNavigate } from "react-router-dom";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 // Define the navigation structure
 export const NAVIGATION: Navigation = [
@@ -55,6 +56,14 @@ export const NAVIGATION: Navigation = [
       },
     ],
   },
+  {
+    kind: "divider",
+  },
+  {
+    segment: "logout",
+    title: "Logout",
+    icon: <LogoutIcon />,
+  },
 ];
 
 // Define the theme
@@ -84,7 +93,7 @@ function AuthenticatedLayout({ children }: { children: React.ReactNode }) {
       searchParams: new URLSearchParams(location.search),
       navigate: (path) => navigate(path),
     }),
-    [location.pathname, location.search, navigate]
+    [location, navigate]
   );
 
   return (

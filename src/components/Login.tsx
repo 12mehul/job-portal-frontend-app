@@ -43,6 +43,9 @@ const Login = () => {
               toast.success("Login successful!");
               localStorage.setItem("uinfo", JSON.stringify(res.data));
               action.resetForm();
+              setTimeout(() => {
+                window.location.href = "/home";
+              }, 2000);
             }
           })
           .catch((err) => {
