@@ -68,10 +68,13 @@ export const NAVIGATION: Navigation = [
 
 // Define the theme
 const demoTheme = createTheme({
+  palette: {
+    mode: "light",
+  },
   cssVariables: {
     colorSchemeSelector: "data-toolpad-color-scheme",
   },
-  colorSchemes: { light: true, dark: true },
+  // colorSchemes: { light: true, dark: true },
   breakpoints: {
     values: {
       xs: 0,
@@ -109,7 +112,7 @@ function AuthenticatedLayout({ children }: { children: React.ReactNode }) {
             p: 4,
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
+            // alignItems: "center",
           }}
         >
           {children}
