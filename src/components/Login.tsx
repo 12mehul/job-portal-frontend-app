@@ -41,7 +41,8 @@ const Login = () => {
           .then((res: AxiosResponse) => {
             if (res.data) {
               toast.success("Login successful!");
-              localStorage.setItem("uinfo", JSON.stringify(res.data));
+              localStorage.setItem("token", res.data.token);
+              localStorage.setItem("type", res.data.type);
               action.resetForm();
               setTimeout(() => {
                 window.location.href = "/home";

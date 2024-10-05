@@ -41,9 +41,8 @@ const paperStyle = {
 const Profile = () => {
   const [skillInput, setSkillInput] = useState("");
 
-  const user = localStorage.getItem("uinfo")
-    ? JSON.parse(localStorage.getItem("uinfo") as string)
-    : null;
+  const userType =
+    typeof window !== "undefined" ? localStorage.getItem("type") : null;
 
   useEffect(() => {
     getData();
@@ -54,7 +53,7 @@ const Profile = () => {
       .get("/user")
       .then((res) => {
         const userData = res.data;
-        if (user?.type === "applicant") {
+        if (userType === "applicant") {
           // Populate applicant form values
           handleApplicant.setValues({
             name: userData.name,
@@ -65,7 +64,7 @@ const Profile = () => {
             userId: userData.userId,
             _id: userData._id,
           });
-        } else if (user?.type === "recruiter") {
+        } else if (userType === "recruiter") {
           // Populate recruiter form values
           handleRecruiter.setValues({
             name: userData.name,
@@ -168,13 +167,13 @@ const Profile = () => {
         <form
           autoComplete="off"
           onSubmit={
-            user?.type === "applicant"
+            userType === "applicant"
               ? handleApplicant.handleSubmit
               : handleRecruiter.handleSubmit
           }
         >
           <Grid2 container spacing={3}>
-            {user?.type === "applicant" ? (
+            {userType === "applicant" ? (
               <>
                 <Grid2 size={12}>
                   <TextField

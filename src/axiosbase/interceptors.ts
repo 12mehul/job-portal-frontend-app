@@ -8,12 +8,11 @@ const authFetch = axios.create({
 
 authFetch.interceptors.request.use(
   (request: InternalAxiosRequestConfig<any>) => {
-    const user = localStorage.getItem("uinfo")
-      ? JSON.parse(localStorage.getItem("uinfo") as string)
-      : null;
+    const token =
+      typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
-    if (user.token) {
-      request.headers.Authorization = `Bearer ${user.token}`;
+    if (token) {
+      request.headers.Authorization = `Bearer ${token}`;
     }
     return request;
   },
