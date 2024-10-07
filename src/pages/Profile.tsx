@@ -160,7 +160,7 @@ const Profile = () => {
     <Container maxWidth="lg" sx={{ display: "flex", padding: "20px" }}>
       <Paper elevation={15} square={false} style={paperStyle}>
         <Grid2 container justifyContent="center">
-          <Typography variant="h4" component="h4" color="secondary">
+          <Typography variant="h4" component="h4">
             Profile
           </Typography>
         </Grid2>

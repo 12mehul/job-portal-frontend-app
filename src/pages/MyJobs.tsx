@@ -4,14 +4,14 @@ import { Typography } from "@mui/material";
 import authFetch from "../axiosbase/interceptors";
 import { AxiosResponse } from "axios";
 import { IJobLists } from "../interface/IJob";
-import JobsColumns from "../common/JobsColumns";
+import MyJobsColumns from "../common/MyJobsColumns";
 
-const Home = () => {
+const MyJobs = () => {
   const [data, setData] = useState<IJobLists[]>([]);
 
   useEffect(() => {
     authFetch
-      .get("/jobs")
+      .get("/jobs?myjobs=1")
       .then((res: AxiosResponse) => {
         setData(res.data);
       })
@@ -32,12 +32,12 @@ const Home = () => {
           fontWeight: 500,
         }}
       >
-        Jobs
+        My Jobs
       </Typography>
       <div style={{ height: 320, width: "100%" }}>
         <DataGrid
           rows={data}
-          columns={JobsColumns()}
+          columns={MyJobsColumns()}
           getRowId={(row) => row._id}
         />
       </div>
@@ -45,4 +45,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default MyJobs;

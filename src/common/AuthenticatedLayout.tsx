@@ -2,7 +2,6 @@ import * as React from "react";
 import { Box } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import DescriptionIcon from "@mui/icons-material/Description";
 import LayersIcon from "@mui/icons-material/Layers";
@@ -10,6 +9,9 @@ import { AppProvider, DashboardLayout } from "@toolpad/core";
 import type { Navigation, Router } from "@toolpad/core";
 import { useLocation, useNavigate } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
+
+const userType =
+  typeof window !== "undefined" ? localStorage.getItem("type") : null;
 
 // Define the navigation structure
 export const NAVIGATION: Navigation = [
@@ -28,34 +30,39 @@ export const NAVIGATION: Navigation = [
     icon: <LayersIcon />,
   },
   {
-    segment: "orders",
-    title: "Orders",
-    icon: <ShoppingCartIcon />,
-  },
-  {
     kind: "divider",
   },
   {
     kind: "header",
     title: "Analytics",
   },
-  {
-    segment: "jobs",
-    title: "Jobs",
-    icon: <BarChartIcon />,
-    children: [
-      {
-        segment: "create",
-        title: "Create",
-        icon: <DescriptionIcon />,
-      },
-      {
-        segment: "lists",
-        title: "Lists",
-        icon: <DescriptionIcon />,
-      },
-    ],
-  },
+  ...(userType === "applicant"
+    ? [
+        {
+          segment: "applications",
+          title: "Applications",
+          icon: <BarChartIcon />,
+        },
+      ]
+    : [
+        {
+          segment: "jobs",
+          title: "Jobs",
+          icon: <BarChartIcon />,
+          children: [
+            {
+              segment: "create",
+              title: "Create",
+              icon: <DescriptionIcon />,
+            },
+            {
+              segment: "mylists",
+              title: "Lists",
+              icon: <DescriptionIcon />,
+            },
+          ],
+        },
+      ]),
   {
     kind: "divider",
   },
@@ -109,7 +116,7 @@ function AuthenticatedLayout({ children }: { children: React.ReactNode }) {
       <DashboardLayout>
         <Box
           sx={{
-            p: 4,
+            p: 2,
             display: "flex",
             flexDirection: "column",
             // alignItems: "center",

@@ -88,13 +88,12 @@ const CreateJobs = () => {
         });
     },
   });
-  console.log(values);
 
   return (
     <Container maxWidth="lg" sx={{ display: "flex", padding: "18px" }}>
       <Paper elevation={5} square={false} style={paperStyle}>
         <Grid2 container justifyContent="center">
-          <Typography variant="h4" component="h4" color="secondary">
+          <Typography variant="h4" component="h4">
             Create Job
           </Typography>
         </Grid2>
