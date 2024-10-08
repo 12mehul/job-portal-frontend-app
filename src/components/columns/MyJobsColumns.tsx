@@ -1,9 +1,43 @@
+import React, { useState } from "react";
 import { GridColDef } from "@mui/x-data-grid";
 import { Box, Button, Card, Rating } from "@mui/material";
 import { IJobLists } from "../../interface/IJob";
 import { blue, pink, teal } from "@mui/material/colors";
+import DeleteMyJobs from "../dialogBox/DeleteMyJobs";
+import UpdateMyJobs from "../dialogBox/UpdateMyJobs";
+import { useNavigate } from "react-router-dom";
 
-const MyJobsColumns = (): GridColDef<IJobLists>[] => {
+const MyJobsColumns = (
+  triggerRefresh: Function,
+  data: IJobLists[]
+): GridColDef<IJobLists>[] => {
+  const navigate = useNavigate();
+  const [open, setOpen] = useState<boolean>(false);
+  const [delOpen, setDelOpen] = useState<boolean>(false);
+  const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
+
+  const handleOpen = (id: string) => {
+    setOpen(true);
+    setSelectedJobId(id);
+  };
+  const handleClose = () => {
+    setOpen(false);
+    setSelectedJobId(null);
+  };
+
+  const handleDelOpen = (id: string) => {
+    setDelOpen(true);
+    setSelectedJobId(id);
+  };
+  const handleDelClose = () => {
+    setDelOpen(false);
+    setSelectedJobId(null);
+  };
+
+  const handleView = (id: string) => {
+    navigate(`/job/applications/${id}`);
+  };
+
   return [
     {
       field: "title",
@@ -92,7 +126,7 @@ const MyJobsColumns = (): GridColDef<IJobLists>[] => {
                 backgroundColor: blue[400],
               },
             }}
-            // onClick={() => handleEdit(params.row.id)}
+            onClick={() => handleView(params.row._id)}
           >
             View
           </Button>
@@ -104,7 +138,7 @@ const MyJobsColumns = (): GridColDef<IJobLists>[] => {
                 backgroundColor: teal[400],
               },
             }}
-            // onClick={() => handleEdit(params.row.id)}
+            onClick={() => handleOpen(params.row._id)}
           >
             EDIT
           </Button>
@@ -116,10 +150,23 @@ const MyJobsColumns = (): GridColDef<IJobLists>[] => {
                 backgroundColor: pink[400],
               },
             }}
-            // onClick={() => handleDelete(params.row.id)}
+            onClick={() => handleDelOpen(params.row._id)}
           >
             DELETE
           </Button>
+          <UpdateMyJobs
+            open={open}
+            handleClose={handleClose}
+            triggerRefresh={triggerRefresh}
+            data={data}
+            id={selectedJobId}
+          />
+          <DeleteMyJobs
+            delOpen={delOpen}
+            handleDelClose={handleDelClose}
+            triggerRefresh={triggerRefresh}
+            id={selectedJobId}
+          />
         </Card>
       ),
     },

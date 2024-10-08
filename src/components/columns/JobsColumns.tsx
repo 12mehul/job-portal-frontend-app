@@ -3,11 +3,23 @@ import { Box, Button, Card, Rating } from "@mui/material";
 import { IJobLists } from "../../interface/IJob";
 import { blue } from "@mui/material/colors";
 import { useState } from "react";
+import ViewApplyDialog from "../dialogBox/ViewApplyDialog";
 
 const JobsColumns = (): GridColDef<IJobLists>[] => {
   const [open, setOpen] = useState<boolean>(false);
+  const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
   const userType =
     typeof window !== "undefined" ? localStorage.getItem("type") : null;
+
+  const handleOpen = (id: string) => {
+    setOpen(true);
+    setSelectedJobId(id);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setSelectedJobId(null);
+  };
 
   return [
     {
@@ -93,10 +105,15 @@ const JobsColumns = (): GridColDef<IJobLists>[] => {
               },
             }}
             disabled={userType === "recruiter"}
-            // onClick={() => handleEdit(params.row.id)}
+            onClick={() => handleOpen(params.row._id)}
           >
             Apply
           </Button>
+          <ViewApplyDialog
+            open={open}
+            handleClose={handleClose}
+            id={selectedJobId}
+          />
         </Card>
       ),
     },

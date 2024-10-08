@@ -8,8 +8,9 @@ import MyJobsColumns from "../../components/columns/MyJobsColumns";
 
 const MyJobs = () => {
   const [data, setData] = useState<IJobLists[]>([]);
+  const [refresh, setRefresh] = useState<boolean>(false);
 
-  useEffect(() => {
+  const fetchData = () => {
     authFetch
       .get("/jobs?myjobs=1")
       .then((res: AxiosResponse) => {
@@ -18,7 +19,16 @@ const MyJobs = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [refresh]);
+
+  // Function to trigger data refresh
+  const triggerRefresh = () => {
+    setRefresh((prev) => !prev);
+  };
 
   return (
     <div>
@@ -37,7 +47,7 @@ const MyJobs = () => {
       <div style={{ height: 320, width: "100%" }}>
         <DataGrid
           rows={data}
-          columns={MyJobsColumns()}
+          columns={MyJobsColumns(triggerRefresh, data)}
           getRowId={(row) => row._id}
         />
       </div>

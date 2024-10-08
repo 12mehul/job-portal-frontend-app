@@ -98,8 +98,6 @@ const Register = () => {
         .then((res: AxiosResponse) => {
           if (res.data) {
             toast.success("Registration successful!");
-            localStorage.setItem("token", res.data.token);
-            localStorage.setItem("type", res.data.type);
             action.resetForm();
             setTimeout(() => {
               window.location.href = "/";
