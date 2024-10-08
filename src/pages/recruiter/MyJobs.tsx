@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { Typography } from "@mui/material";
-import authFetch from "../axiosbase/interceptors";
+import authFetch from "../../axiosbase/interceptors";
 import { AxiosResponse } from "axios";
-import { IJobLists } from "../interface/IJob";
-import MyJobsColumns from "../common/MyJobsColumns";
+import { IJobLists } from "../../interface/IJob";
+import MyJobsColumns from "../../components/columns/MyJobsColumns";
 
 const MyJobs = () => {
   const [data, setData] = useState<IJobLists[]>([]);

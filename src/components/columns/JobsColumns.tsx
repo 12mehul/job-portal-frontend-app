@@ -1,9 +1,14 @@
 import { GridColDef } from "@mui/x-data-grid";
 import { Box, Button, Card, Rating } from "@mui/material";
-import { IJobLists } from "../interface/IJob";
-import { blue, pink, teal } from "@mui/material/colors";
+import { IJobLists } from "../../interface/IJob";
+import { blue } from "@mui/material/colors";
+import { useState } from "react";
 
-const MyJobsColumns = (): GridColDef<IJobLists>[] => {
+const JobsColumns = (): GridColDef<IJobLists>[] => {
+  const [open, setOpen] = useState<boolean>(false);
+  const userType =
+    typeof window !== "undefined" ? localStorage.getItem("type") : null;
+
   return [
     {
       field: "title",
@@ -37,27 +42,22 @@ const MyJobsColumns = (): GridColDef<IJobLists>[] => {
       ),
     },
     {
-      field: "dateOfPosting",
-      headerName: "POSTING",
-      width: 120,
+      field: "recruiter",
+      headerName: "POSTED BY",
+      width: 140,
       renderCell: (params) => (
-        <Box component="span">
-          {new Date(params.row.dateOfPosting).toLocaleDateString()}
+        <Box component="span" sx={{ textTransform: "capitalize" }}>
+          {params.row.recruiter.name}
         </Box>
       ),
     },
     {
-      field: "maxApplicants",
-      headerName: "APPLICANTS",
-      width: 120,
-    },
-    {
-      field: "maxPositions",
-      headerName: "POSITIONS",
+      field: "deadline",
+      headerName: "DEADLINE",
       width: 120,
       renderCell: (params) => (
         <Box component="span">
-          {params.row.maxPositions - params.row.acceptedCandidates}
+          {new Date(params.row.deadline).toLocaleDateString()}
         </Box>
       ),
     },
@@ -80,7 +80,7 @@ const MyJobsColumns = (): GridColDef<IJobLists>[] => {
           sx={{
             padding: "10px",
             display: "flex",
-            justifyContent: "start",
+            justifyContent: "center",
             gap: "10px",
           }}
         >
@@ -92,33 +92,10 @@ const MyJobsColumns = (): GridColDef<IJobLists>[] => {
                 backgroundColor: blue[400],
               },
             }}
+            disabled={userType === "recruiter"}
             // onClick={() => handleEdit(params.row.id)}
           >
-            View
-          </Button>
-          <Button
-            variant="contained"
-            sx={{
-              backgroundColor: teal[500],
-              "&:hover": {
-                backgroundColor: teal[400],
-              },
-            }}
-            // onClick={() => handleEdit(params.row.id)}
-          >
-            EDIT
-          </Button>
-          <Button
-            variant="contained"
-            sx={{
-              backgroundColor: pink[500],
-              "&:hover": {
-                backgroundColor: pink[400],
-              },
-            }}
-            // onClick={() => handleDelete(params.row.id)}
-          >
-            DELETE
+            Apply
           </Button>
         </Card>
       ),
@@ -126,4 +103,4 @@ const MyJobsColumns = (): GridColDef<IJobLists>[] => {
   ];
 };
 
-export default MyJobsColumns;
+export default JobsColumns;

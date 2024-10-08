@@ -4,7 +4,7 @@ import { Typography } from "@mui/material";
 import authFetch from "../axiosbase/interceptors";
 import { AxiosResponse } from "axios";
 import { IJobLists } from "../interface/IJob";
-import JobsColumns from "../common/JobsColumns";
+import JobsColumns from "../components/columns/JobsColumns";
 
 const Home = () => {
   const [data, setData] = useState<IJobLists[]>([]);

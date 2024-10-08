@@ -16,8 +16,8 @@ import {
 } from "@mui/material";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
-import authFetch from "../axiosbase/interceptors";
-import { ICreateJob } from "../interface/IJob";
+import authFetch from "../../axiosbase/interceptors";
+import { ICreateJob } from "../../interface/IJob";
 
 const initialValues: ICreateJob = {
   title: "",

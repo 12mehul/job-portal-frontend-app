@@ -2,8 +2,8 @@ import { Route, Routes } from "react-router-dom";
 import AuthenticatedLayout from "./common/AuthenticatedLayout";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
-import CreateJobs from "./pages/CreateJobs";
-import MyJobs from "./pages/MyJobs";
+import CreateJobs from "./pages/recruiter/CreateJobs";
+import MyJobs from "./pages/recruiter/MyJobs";
 
 const AuthenticatedRoutes = () => {
   return (
