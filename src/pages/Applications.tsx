@@ -11,7 +11,7 @@ import {
 import authFetch from "../axiosbase/interceptors";
 import { AxiosResponse } from "axios";
 import { IApplications } from "../interface/IApplications";
-import { blue } from "@mui/material/colors";
+import { blue, grey } from "@mui/material/colors";
 
 const Applications = () => {
   const [data, setData] = useState<IApplications[]>([]);
@@ -28,7 +28,7 @@ const Applications = () => {
   }, []);
 
   return (
-    <div>
+    <Box>
       <Grid2 container spacing={3} justifyContent="center">
         <Typography
           variant="h4"
@@ -43,10 +43,10 @@ const Applications = () => {
           Applications
         </Typography>
       </Grid2>
-      <Grid2 spacing={3} justifyContent="start" width="100%">
+      <Grid2 spacing={3} width="100%">
         {data.map((value) => (
-          <Grid2 key={value._id}>
-            <Card sx={{ borderRadius: "30px" }}>
+          <Card sx={{ borderRadius: "30px" }} key={value._id}>
+            <Grid2 sx={{ paddingX: "25px" }}>
               <Grid2 margin={1}>
                 <Typography
                   gutterBottom
@@ -55,54 +55,87 @@ const Applications = () => {
                   sx={{
                     textTransform: "capitalize",
                     textAlign: "center",
-                    fontSize: "25px",
+                    fontSize: "35px",
+                    color: grey[700],
+                    fontWeight: 600,
                   }}
                 >
                   {value.job.title}
                 </Typography>
               </Grid2>
-              <Grid2 margin={2}>
-                <Box
-                  component="span"
-                  sx={{
-                    color: "text.secondary",
-                    textTransform: "capitalize",
-                  }}
-                >
-                  Posted By: {value.recruiter.name}
+              <Grid2 margin={1}>
+                <Box>
+                  Posted By:{" "}
+                  <Box
+                    component="span"
+                    sx={{
+                      color: grey[600],
+                      textTransform: "capitalize",
+                    }}
+                  >
+                    {value.recruiter.name}
+                  </Box>
                 </Box>
               </Grid2>
-              <Grid2 margin={2}>
-                <Box
-                  component="span"
-                  sx={{
-                    color: "text.secondary",
-                    textTransform: "capitalize",
-                  }}
-                >
-                  Role: {value.job.jobType}
+              <Grid2 margin={1}>
+                <Box>
+                  Role:{" "}
+                  <Box
+                    component="span"
+                    sx={{
+                      color: grey[600],
+                      textTransform: "capitalize",
+                    }}
+                  >
+                    {value.job.jobType}
+                  </Box>
                 </Box>
               </Grid2>
-              <Grid2 margin={2}>
-                <Box component="span" sx={{ color: "text.secondary" }}>
-                  Salary: Rs {value.job.salary} per month
+              <Grid2 margin={1}>
+                <Box>
+                  Salary:{" "}
+                  <Box
+                    component="span"
+                    sx={{
+                      color: grey[600],
+                      textTransform: "capitalize",
+                    }}
+                  >
+                    Rs {value.job.salary} per month
+                  </Box>
                 </Box>
               </Grid2>
-              <Grid2 margin={2}>
-                <Box component="span" sx={{ color: "text.secondary" }}>
+              <Grid2 margin={1}>
+                <Box>
                   Duration:{" "}
-                  {value.job.duration !== 0
-                    ? `${value.job.duration} month`
-                    : "Flexible"}
+                  <Box
+                    component="span"
+                    sx={{
+                      color: grey[600],
+                      textTransform: "capitalize",
+                    }}
+                  >
+                    {value.job.duration !== 0
+                      ? `${value.job.duration} month`
+                      : "Flexible"}
+                  </Box>
                 </Box>
               </Grid2>
-              <Grid2 margin={2}>
-                <Box component="span" sx={{ color: "text.secondary" }}>
+              <Grid2 margin={1}>
+                <Box>
                   Applied On:{" "}
-                  {new Date(value.dateOfApplication).toLocaleDateString()}
+                  <Box
+                    component="span"
+                    sx={{
+                      color: grey[600],
+                      textTransform: "capitalize",
+                    }}
+                  >
+                    {new Date(value.dateOfApplication).toLocaleDateString()}
+                  </Box>
                 </Box>
               </Grid2>
-              <Grid2 margin={2}>
+              <Grid2 margin={1}>
                 {value?.job.skillsets.length > 0 && (
                   <div>
                     {value.job.skillsets.map((skill, index) => (
@@ -115,29 +148,29 @@ const Applications = () => {
                   </div>
                 )}
               </Grid2>
-              <CardActions>
-                <Badge
-                  sx={{
-                    backgroundColor: blue[700],
-                    "&:hover": {
-                      backgroundColor: blue[600],
-                    },
-                    textTransform: "uppercase",
-                    padding: "10px 5px",
-                    borderRadius: "30px",
-                    color: "white",
-                    width: "100%",
-                    justifyContent: "center",
-                  }}
-                >
-                  {value.status}
-                </Badge>
-              </CardActions>
-            </Card>
-          </Grid2>
+            </Grid2>
+            <CardActions>
+              <Badge
+                sx={{
+                  backgroundColor: blue[700],
+                  "&:hover": {
+                    backgroundColor: blue[600],
+                  },
+                  textTransform: "uppercase",
+                  padding: "10px 5px",
+                  borderRadius: "30px",
+                  color: "white",
+                  width: "100%",
+                  justifyContent: "center",
+                }}
+              >
+                {value.status}
+              </Badge>
+            </CardActions>
+          </Card>
         ))}
       </Grid2>
-    </div>
+    </Box>
   );
 };
 
