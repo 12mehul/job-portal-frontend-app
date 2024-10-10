@@ -8,6 +8,7 @@ export interface IApplications {
   jobId: string;
   sop: string;
   dateOfApplication: string;
+  dateOfJoining: string;
   jobApplicant: JobApplicant;
   job: Job;
   recruiter: Recruiter;
@@ -45,3 +46,10 @@ export interface Job {
   duration: number;
   salary: number;
 }
+
+export type IJobStatus =
+  | "applied"
+  | "shortlisted"
+  | "accepted"
+  | "rejected"
+  | "finished";
