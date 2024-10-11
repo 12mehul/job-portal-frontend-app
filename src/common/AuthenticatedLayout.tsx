@@ -116,7 +116,6 @@ function AuthenticatedLayout({ children }: { children: React.ReactNode }) {
       <DashboardLayout>
         <Box
           sx={{
-            p: 2,
             display: "flex",
             flexDirection: "column",
             // alignItems: "center",
