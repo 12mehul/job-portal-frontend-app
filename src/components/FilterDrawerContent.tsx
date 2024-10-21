@@ -32,12 +32,10 @@ const FilterDrawerContent = ({
   onApplyFilters,
 }: IDrawerContentProps) => {
   const [formObj, setFormObj] = useState<IFilterJobs>({
-    jobType: {
-      fullTime: false,
-      partTime: false,
-      wfh: false,
-    },
-    salaryMin:  0,
+    fullTimeJob: false,
+    partTimeJob: false,
+    wfhJob: false,
+    salaryMin: 0,
     salaryMax: 100000,
     duration: "0",
     salaryAesc: false,
@@ -52,10 +50,7 @@ const FilterDrawerContent = ({
     const { name, checked } = event.target;
     setFormObj((prevState) => ({
       ...prevState,
-      jobType: {
-        ...prevState.jobType,
-        [name]: checked,
-      },
+      [name]: checked,
     }));
   };
 
@@ -78,9 +73,9 @@ const FilterDrawerContent = ({
 
   const handleApply = () => {
     const filters = {
-      jobType: Object.keys(formObj.jobType)
-        .filter((key) => formObj.jobType[key as keyof typeof formObj.jobType])
-        .map((key) => key),
+      fullTime: formObj.fullTimeJob,
+      partTime: formObj.partTimeJob,
+      wfh: formObj.wfhJob,
       salaryMin: formObj.salaryMin,
       salaryMax: formObj.salaryMax,
       duration: formObj.duration,
@@ -96,7 +91,6 @@ const FilterDrawerContent = ({
       },
     };
     onApplyFilters(filters); // Call parent handler
-    console.log(filters);
   };
 
   return (
@@ -125,8 +119,8 @@ const FilterDrawerContent = ({
             <FormControlLabel
               control={
                 <Checkbox
-                  name="fullTime"
-                  checked={formObj.jobType.fullTime}
+                  name="fullTimeJob"
+                  checked={formObj.fullTimeJob}
                   onChange={handleCheckboxChange}
                 />
               }
@@ -135,8 +129,8 @@ const FilterDrawerContent = ({
             <FormControlLabel
               control={
                 <Checkbox
-                  name="partTime"
-                  checked={formObj.jobType.partTime}
+                  name="partTimeJob"
+                  checked={formObj.partTimeJob}
                   onChange={handleCheckboxChange}
                 />
               }
@@ -145,8 +139,8 @@ const FilterDrawerContent = ({
             <FormControlLabel
               control={
                 <Checkbox
-                  name="wfh"
-                  checked={formObj.jobType.wfh}
+                  name="wfhJob"
+                  checked={formObj.wfhJob}
                   onChange={handleCheckboxChange}
                 />
               }

@@ -19,6 +19,7 @@ const MyJobs = () => {
   const [data, setData] = useState<IJobLists[]>([]);
   const [refresh, setRefresh] = useState<boolean>(false);
   const [isDrawerOpen, setDrawerOpen] = React.useState(false);
+  const [filters, setFilters] = useState<any>({});
 
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -33,9 +34,60 @@ const MyJobs = () => {
       setDrawerOpen(open);
     };
 
-  const fetchData = () => {
+  const fetchJobs = (filterParams: any = {}) => {
+    let queryString = `http://localhost:4444/api/jobs?myjobs=1&`;
+
+    // Add jobType filters to the query string
+    if (filterParams.fullTime) {
+      queryString += `jobType=Full%20Time&`;
+    }
+    if (filterParams.partTime) {
+      queryString += `jobType=Part%20Time&`;
+    }
+    if (filterParams.wfh) {
+      queryString += `jobType=Work%20from%20Home&`;
+    }
+
+    // Add salary range to the query string
+    if (filterParams.salaryMin !== undefined && filterParams.salaryMin !== 0) {
+      queryString += `salaryMin=${filterParams.salaryMin}&`;
+    }
+    if (
+      filterParams.salaryMax !== undefined &&
+      filterParams.salaryMax !== 100000
+    ) {
+      queryString += `salaryMax=${filterParams.salaryMax}&`;
+    }
+
+    // Add duration to the query string
+    if (filterParams.duration && filterParams.duration !== "0") {
+      queryString += `duration=${filterParams.duration}&`;
+    }
+
+    // Add sort order (asc/desc)
+    if (filterParams.asc) {
+      Object.keys(filterParams.asc).forEach((key) => {
+        if (filterParams.asc[key]) {
+          queryString += `asc=${key}&`;
+        }
+      });
+    }
+    if (filterParams.desc) {
+      Object.keys(filterParams.desc).forEach((key) => {
+        if (filterParams.desc[key]) {
+          queryString += `desc=${key}&`;
+        }
+      });
+    }
+
+    // Trim the trailing "&" or "?" from the query string if necessary
+    queryString = queryString.endsWith("&")
+      ? queryString.slice(0, -1)
+      : queryString;
+
+    // Make API call
     authFetch
-      .get("/jobs?myjobs=1")
+      .get(queryString)
       .then((res: AxiosResponse) => {
         setData(res.data);
       })
@@ -45,12 +97,18 @@ const MyJobs = () => {
   };
 
   useEffect(() => {
-    fetchData();
-  }, [refresh]);
+    fetchJobs(filters);
+  }, [refresh, filters]);
 
   // Function to trigger data refresh
   const triggerRefresh = () => {
     setRefresh((prev) => !prev);
+  };
+
+  // Handler to apply filters from the drawer
+  const handleApplyFilters = (filterData: any) => {
+    setFilters(filterData);
+    setDrawerOpen(false); // Close the drawer after applying filters
   };
 
   return (
@@ -95,7 +153,10 @@ const MyJobs = () => {
             sx: { margin: "70px", alignItems: "center", borderRadius: "10px" },
           }}
         >
-          <FilterDrawerContent toggleDrawer={toggleDrawer} />
+          <FilterDrawerContent
+            toggleDrawer={toggleDrawer}
+            onApplyFilters={handleApplyFilters}
+          />
         </SwipeableDrawer>
       </Grid2>
       <Grid2 sx={{ height: 320, width: "100%" }}>

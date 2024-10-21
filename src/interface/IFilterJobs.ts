@@ -1,9 +1,7 @@
 export interface IFilterJobs {
-  jobType: {
-    fullTime: boolean;
-    partTime: boolean;
-    wfh: boolean;
-  };
+  fullTimeJob: boolean;
+  partTimeJob: boolean;
+  wfhJob: boolean;
   salaryMin: number;
   salaryMax: number;
   duration: string;

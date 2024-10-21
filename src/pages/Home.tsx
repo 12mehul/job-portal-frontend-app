@@ -37,40 +37,52 @@ const Home = () => {
     let queryString = `http://localhost:4444/api/jobs?`;
 
     // Add jobType filters to the query string
-    if (filterParams.jobType && filterParams.jobType.length > 0) {
-      queryString += filterParams.jobType
-        .map((type: string) => `?jobType=${type}`)
-        .join("&");
+    if (filterParams.fullTime) {
+      queryString += `jobType=Full%20Time&`;
+    }
+    if (filterParams.partTime) {
+      queryString += `jobType=Part%20Time&`;
+    }
+    if (filterParams.wfh) {
+      queryString += `jobType=Work%20from%20Home&`;
     }
 
     // Add salary range to the query string
+    if (filterParams.salaryMin !== undefined && filterParams.salaryMin !== 0) {
+      queryString += `salaryMin=${filterParams.salaryMin}&`;
+    }
     if (
-      filterParams.salaryMin !== undefined &&
-      filterParams.salaryMax !== undefined
+      filterParams.salaryMax !== undefined &&
+      filterParams.salaryMax !== 100000
     ) {
-      queryString += `&salaryMin=${filterParams.salaryMin}&salaryMax=${filterParams.salaryMax}`;
+      queryString += `salaryMax=${filterParams.salaryMax}&`;
     }
 
     // Add duration to the query string
-    if (filterParams.duration) {
-      queryString += `&duration=${filterParams.duration}`;
+    if (filterParams.duration && filterParams.duration !== "0") {
+      queryString += `duration=${filterParams.duration}&`;
     }
 
     // Add sort order (asc/desc)
     if (filterParams.asc) {
       Object.keys(filterParams.asc).forEach((key) => {
         if (filterParams.asc[key]) {
-          queryString += `&asc=${key}`;
+          queryString += `asc=${key}&`;
         }
       });
     }
     if (filterParams.desc) {
       Object.keys(filterParams.desc).forEach((key) => {
         if (filterParams.desc[key]) {
-          queryString += `&desc=${key}`;
+          queryString += `desc=${key}&`;
         }
       });
     }
+
+    // Trim the trailing "&" or "?" from the query string if necessary
+    queryString = queryString.endsWith("&")
+      ? queryString.slice(0, -1)
+      : queryString;
 
     // Make API call
     authFetch
