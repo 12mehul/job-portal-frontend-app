@@ -11,11 +11,14 @@ const AuthenticatedRoutes = () => {
   return (
     <AuthenticatedLayout>
       <Routes>
+        {/* Common Routes */}
         <Route path="/home" element={<Home />} />
         <Route path="/profile" element={<Profile />} />
+        {/* Recruiter Routes */}
         <Route path="/jobs/create" element={<CreateJobs />} />
         <Route path="/jobs/mylists" element={<MyJobs />} />
         <Route path="/job/applications/:jobId" element={<JobApplications />} />
+        {/* Applicant Routes */}
         <Route path="/applications" element={<Applications />} />
       </Routes>
     </AuthenticatedLayout>
