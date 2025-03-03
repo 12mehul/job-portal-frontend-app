@@ -23,13 +23,13 @@ authFetch.interceptors.request.use(
 
 authFetch.interceptors.response.use(
   (response: AxiosResponse<any>) => {
-    if (response.status == 401) {
-      window.location.href = "/";
-      localStorage.clear();
-    }
     return response;
   },
   (error) => {
+    if (error.response && error.response.status === 401) {
+      window.location.href = "/";
+      localStorage.clear();
+    }
     return Promise.reject(error);
   }
 );
